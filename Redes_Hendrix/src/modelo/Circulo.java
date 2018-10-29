@@ -6,6 +6,12 @@ package modelo;
  *
  */
 public class Circulo extends Figura {
+
+	public Circulo(int posicionX, int posicionY, String etiqueta, Long momentoCreacion) {
+		super(posicionX, posicionY, etiqueta, momentoCreacion);
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	// ------------------------------------------------------------------------------------------
 	// Constantes
@@ -17,6 +23,10 @@ public class Circulo extends Figura {
 	// Atributos
 	// ------------------------------------------------------------------------------------------
 	
+	
+	// ------------------------------------------------------------------------------------------
+	// Constructor
+	// ------------------------------------------------------------------------------------------
 	
 	
 	// ------------------------------------------------------------------------------------------

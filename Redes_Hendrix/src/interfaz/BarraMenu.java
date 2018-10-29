@@ -76,6 +76,7 @@ public class BarraMenu extends JMenuBar implements ActionListener {
 	 * @param ventana
 	 */
 	public BarraMenu(VentanaPrincipal ventana) {
+		principal = ventana;
 		menuArchivo = new JMenu("Archivo");
 		
 		itemNuevo = new JMenuItem(NUEVO);
@@ -115,7 +116,10 @@ public class BarraMenu extends JMenuBar implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		String comando = e.getActionCommand();
+		if (comando.equals(NUEVO)) {
+			principal.nuevoDiagrama();
+		}
 	}
 
 }

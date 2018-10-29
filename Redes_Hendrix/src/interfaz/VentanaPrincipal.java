@@ -3,7 +3,13 @@ package interfaz;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+
+import excepciones.SintaxisException;
+import modelo.Composicion;
+import modelo.Figura;
+import modelo.Rectangulo;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -39,6 +45,11 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	private BarraMenu barraMenu;
 	
+	/**
+	 * Representa la composición que se está construyendo
+	 */
+	private Composicion composicion;
+	
 	// ------------------------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------------------------
@@ -53,7 +64,9 @@ public class VentanaPrincipal extends JFrame {
 		setSize(1024, 768);
 		setLayout(new BorderLayout());
 		
-		panelCanvas = new PanelCanvas(this, 1024, 768);
+		composicion = new Composicion();
+		
+		panelCanvas = new PanelCanvas(this, 1024, 768, composicion);
 		JScrollPane barraDesplazadora = new JScrollPane(panelCanvas);
 		barraDesplazadora.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		barraDesplazadora.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -71,20 +84,51 @@ public class VentanaPrincipal extends JFrame {
 	// Servicios
 	// ------------------------------------------------------------------------------------------
 	
-	public void canvasClick() {
-		if (barraHerramientas.botonEspaciosSeleccionado()) {
-			
-		} else if (barraHerramientas.botonNodosSeleccionado()) {
-			
-		} else if (barraHerramientas.botonDominiosSeleccionado()) {
-			
-		} else if (barraHerramientas.botonRelacionesSeleccionado()) {
-			
-		} else if (barraHerramientas.botonSeleccionSeleccionado()) {
-			
-		} else {
-			
+	/**
+	 * Método que gestiona lo que sucede cuando se hace click en una area del canvas.
+	 * @param x - es la coordenada en el eje x donde sucede el click.
+	 * @param y - es la coordenada en el eje y donde sucede el click.
+	 * @param momentoClick - es el momento en el cual sucedió el click.
+	 */
+	public void canvasClick(int x, int y, Long momentoClick) {
+		try {
+			if (barraHerramientas.botonEspaciosSeleccionado()) {
+				Figura f = new Rectangulo(x, y, "Esto es una prueba", momentoClick);
+				composicion.agregarFiguraGeometrica(f);
+			} else if (barraHerramientas.botonNodosSeleccionado()) {
+				
+			} else if (barraHerramientas.botonDominiosSeleccionado()) {
+
+			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
+
+			} else if (barraHerramientas.botonSeleccionSeleccionado()) {
+				Figura seleccionada = composicion.buscarFigura(x, y);
+				panelCanvas.actualizarFiguraSeleccionada(seleccionada);
+			} else if (barraHerramientas.botonBorrarSeleccionado()){
+
+			}
+			panelCanvas.refrescar();
+		} catch (SintaxisException e) {
+			mostrarMensajeError("Dibujar figura", e.getMessage());
 		}
+	}
+	
+	/**
+	 * Método que se encarga de gestionar el proceso de creación de nuevo diagrama.
+	 * Si no se han guardado los cambios del diagrama en el cual se está trabajando,
+	 * se pregunta si desea conservarlo y luego crea una nueva composición.
+	 */
+	public void nuevoDiagrama() {
+		// TODO Crear nuevo Diagrama
+	}
+	
+	/**
+	 * Método que se encarga de mostrar un mensaje de error al usuario.
+	 * @param funcionalidad - Es la funcionalidad en la cual se da el error.
+	 * @param mensaje - Es el contenido del error.
+	 */
+	public void mostrarMensajeError(String funcionalidad, String mensaje) {
+		JOptionPane.showMessageDialog(this, mensaje, funcionalidad, JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/**

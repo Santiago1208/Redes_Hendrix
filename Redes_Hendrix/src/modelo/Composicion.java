@@ -1,6 +1,9 @@
 package modelo;
 
+import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import excepciones.SintaxisException;
@@ -31,7 +34,22 @@ public class Composicion {
 	/**
 	 * Representa la lista de figuras geométricas que han sido dibujadas por el usuario.
 	 */
-	private ArrayList<Figura> figurasGeometricas;
+	private HashMap<Integer, Figura> figurasGeometricas;
+	
+	/**
+	 * Representa un número que se asigna a cada figura para identificarlas
+	 */
+	private Integer secuencia;
+	
+	// ------------------------------------------------------------------------------------------
+	// Constructor
+	// ------------------------------------------------------------------------------------------
+	
+	public Composicion() {
+		secuencia = 0;
+		figurasGeometricas = new HashMap<>();
+		bloques = new ArrayList<>();
+	}
 	
 	// ------------------------------------------------------------------------------------------
 	// Servicios
@@ -49,7 +67,7 @@ public class Composicion {
 	 * Método que se encarga de dar la lista de figuras geométricas dibujadas por el usuario.
 	 * @return la lista de figuras que ha dibujado el usuario.
 	 */
-	public List<Figura> darFigurasGeometricas() {
+	public HashMap<Integer, Figura> darFigurasGeometricas() {
 		return figurasGeometricas;
 	}
 	
@@ -68,8 +86,41 @@ public class Composicion {
 		
 	}
 	
-	public void agregarFiguraGeometrica() throws SintaxisException {
-		
+	/**
+	 * Método que se encarga de agregar una figura a la lista de figuras geométricas.
+	 * @param f - Es la figura que se quiere agregar a la composición.
+	 * @throws SintaxisException
+	 */
+	public void agregarFiguraGeometrica(Figura f) throws SintaxisException {
+		f.asignarIdentificador(secuencia);
+		figurasGeometricas.put(secuencia, f);
+		secuencia++;
+	}
+	
+	/**
+	 * Método que se encarga de buscar la primera figura que contenga en su interior
+	 * al punto (X, Y) pasado por parámetro.
+	 * @param x - Es la coordenada del eje x contenido en la figura a buscar.
+	 * @param y - Es la coordenada del eje y contenido en la figura a buscar.
+	 * @return La figura que contiene el punto (X, Y) especificado o null si la figura
+	 * no existe.
+	 */
+	public Figura buscarFigura(int x, int y) {
+		Figura buscada = null;
+		for(Figura f : figurasGeometricas.values()) {
+			Shape representacion = f.darRepresentacion();
+			Point2D.Double p = new Point2D.Double(x, y);
+			if (representacion.contains(p)) {
+				if (buscada == null) {
+					buscada = f;					
+				} else {
+					if (f.darMomentoCreacion() > buscada.darMomentoCreacion()) {
+						buscada = f;
+					}
+				}
+			}
+		}
+		return buscada;
 	}
 	
 	
