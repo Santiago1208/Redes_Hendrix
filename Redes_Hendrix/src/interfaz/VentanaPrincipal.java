@@ -61,7 +61,7 @@ public class VentanaPrincipal extends JFrame {
 		setTitle("Redes de Hendrix - RDH");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setSize(1024, 768);
+		setSize(800, 600);
 		setLayout(new BorderLayout());
 		
 		composicion = new Composicion();
@@ -98,14 +98,14 @@ public class VentanaPrincipal extends JFrame {
 			} else if (barraHerramientas.botonNodosSeleccionado()) {
 				
 			} else if (barraHerramientas.botonDominiosSeleccionado()) {
-
+				
 			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
-
+				
 			} else if (barraHerramientas.botonSeleccionSeleccionado()) {
 				Figura seleccionada = composicion.buscarFigura(x, y);
 				panelCanvas.actualizarFiguraSeleccionada(seleccionada);
 			} else if (barraHerramientas.botonBorrarSeleccionado()){
-
+				
 			}
 			panelCanvas.refrescar();
 		} catch (SintaxisException e) {
