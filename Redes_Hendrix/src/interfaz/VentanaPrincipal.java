@@ -97,26 +97,23 @@ public class VentanaPrincipal extends JFrame {
 			if (barraHerramientas.botonEspaciosSeleccionado()) {
 				Figura f = new Rectangulo(x, y, "Esto es una prueba", momentoClick);
 				composicion.agregarFiguraGeometrica(f);
-			} else if (barraHerramientas.botonNodosSeleccionado()) {
-				
-			}
-				if (barraHerramientas.botonDominiosSeleccionado()) {
-					Figura f = new Ovalo(x, y, "Esto es una prueba", momentoClick);
-					composicion.agregarFiguraGeometrica(f);
 			} else if (barraHerramientas.botonDominiosSeleccionado()) {
-				if (barraHerramientas.botonEspaciosSeleccionado()) {
-					Figura f = new Circulo(x, y, "Esto es una prueba", momentoClick);
-					composicion.agregarFiguraGeometrica(f);
-			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
-
-			} else if (barraHerramientas.botonSeleccionSeleccionado()) {
+				Figura f = new Ovalo(x, y, "Esto es una prueba", momentoClick);
+				composicion.agregarFiguraGeometrica(f);
+				
+			} else if (barraHerramientas.botonNodosSeleccionado()) {
+				Figura f = new Circulo(x, y, "Esto es una prueba", momentoClick);
+				composicion.agregarFiguraGeometrica(f);
+				
+			}	
+	        else if (barraHerramientas.botonSeleccionSeleccionado()) {
 				Figura seleccionada = composicion.buscarFigura(x, y);
 				panelCanvas.actualizarFiguraSeleccionada(seleccionada);
 			} else if (barraHerramientas.botonBorrarSeleccionado()){
 
 			}
 			panelCanvas.refrescar();
-		} }catch (SintaxisException e) {
+		}catch (SintaxisException e) {
 			mostrarMensajeError("Dibujar figura", e.getMessage());
 		}
 	}
