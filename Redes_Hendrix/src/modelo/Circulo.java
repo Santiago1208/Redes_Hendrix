@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -39,7 +40,7 @@ public class Circulo extends Figura {
 		ancho = RADIO_POR_DEFECTO;
 		alto = RADIO_POR_DEFECTO;
 		
-		representacion = new Rectangle2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
 
 	}
 	

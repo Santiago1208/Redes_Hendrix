@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 
@@ -144,7 +145,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	private void dibujarDominio(Graphics2D g2d, Figura f, boolean focalizado) {
-		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
+		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
 		if (!focalizado) {
 			g2d.setColor(new Color(100, 64, 32));
 		} else {
@@ -156,7 +157,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	private void dibujarNodo(Graphics2D g2d, Figura f, boolean focalizado) {
-		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
+		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
 		if (!focalizado) {
 			g2d.setColor(new Color(88, 154, 232));
 		} else {

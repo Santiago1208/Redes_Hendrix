@@ -63,7 +63,7 @@ public class VentanaPrincipal extends JFrame {
 		setTitle("Redes de Hendrix - RDH");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setSize(1024, 768);
+		setSize(1024, 700);
 		setLayout(new BorderLayout());
 		
 		composicion = new Composicion();

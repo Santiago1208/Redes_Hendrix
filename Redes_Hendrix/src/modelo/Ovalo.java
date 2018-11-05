@@ -1,5 +1,6 @@
 package modelo;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -39,7 +40,7 @@ public class Ovalo extends Figura {
 		ancho = ANCHO_POR_DEFECTO;
 		alto = ALTO_POR_DEFECTO;
 		
-		representacion = new Rectangle2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
 	}
 	// ------------------------------------------------------------------------------------------
 	// Servicios
