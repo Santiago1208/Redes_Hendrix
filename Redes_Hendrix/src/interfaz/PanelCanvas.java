@@ -161,7 +161,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 		if (!focalizado) {
 			g2d.setColor(new Color(88, 154, 232));
 		} else {
-			g2d.setColor(Color.RED);
+			g2d.setColor(Color.ORANGE);
 		}
 		g2d.fill(representacion);
 		g2d.setColor(Color.GRAY);			
