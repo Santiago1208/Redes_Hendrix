@@ -10,7 +10,7 @@ import excepciones.SintaxisException;
 
 /**
  * Clase que representa el diagrama completo que está construyendo el usuario.
- * @author Santiago
+ * @author Santiago Restrepo & Andres Zapata 
  *
  */
 public class Composicion {

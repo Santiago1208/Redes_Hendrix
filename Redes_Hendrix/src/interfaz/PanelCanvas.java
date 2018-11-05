@@ -12,8 +12,10 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+import modelo.Circulo;
 import modelo.Composicion;
 import modelo.Figura;
+import modelo.Ovalo;
 import modelo.Rectangulo;
 
 public class PanelCanvas extends JPanel implements MouseListener, MouseMotionListener {
@@ -96,17 +98,34 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		
 		Collection<Figura> listaFiguras = composicion.darFigurasGeometricas().values();
 		for(Figura f: listaFiguras) {
 			if (f instanceof Rectangulo) {
-				if (figuraSeleccionada == null) {
-					dibujarEspacio(g2d, f, false);
-				} else {
-					if (f.darIdentificador() == figuraSeleccionada.darIdentificador()) {
+				if (figuraSeleccionada == null) 
+					dibujarEspacio(g2d, f, false); 
+				else {
+					if (f.darIdentificador() == figuraSeleccionada.darIdentificador()) 
 						dibujarEspacio(g2d, f, true);					
-					} else {
-						dibujarEspacio(g2d, f, false);
-					}					
+					 else 	dibujarEspacio(g2d, f, false);
+				}
+			}
+			if (f instanceof Ovalo) {
+				if (figuraSeleccionada == null) 
+					dibujarDominio(g2d, f, false); 
+				else {
+					if (f.darIdentificador() == figuraSeleccionada.darIdentificador()) 
+						dibujarDominio(g2d, f, true);					
+					 else 	dibujarDominio(g2d, f, false);
+				}
+			}
+			if (f instanceof Circulo) {
+				if (figuraSeleccionada == null) 
+					dibujarNodo(g2d, f, false); 
+				else {
+					if (f.darIdentificador() == figuraSeleccionada.darIdentificador()) 
+						dibujarNodo(g2d, f, true);					
+					 else 	dibujarNodo(g2d, f, false);
 				}
 			}
 		}
@@ -121,6 +140,30 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 		}
 		g2d.fill(representacion);
 		g2d.setColor(Color.BLACK);			
+		g2d.draw(representacion);
+	}
+	
+	private void dibujarDominio(Graphics2D g2d, Figura f, boolean focalizado) {
+		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
+		if (!focalizado) {
+			g2d.setColor(new Color(100, 64, 32));
+		} else {
+			g2d.setColor(Color.RED);
+		}
+		g2d.fill(representacion);
+		g2d.setColor(Color.DARK_GRAY);			
+		g2d.draw(representacion);
+	}
+	
+	private void dibujarNodo(Graphics2D g2d, Figura f, boolean focalizado) {
+		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
+		if (!focalizado) {
+			g2d.setColor(new Color(88, 154, 232));
+		} else {
+			g2d.setColor(Color.RED);
+		}
+		g2d.fill(representacion);
+		g2d.setColor(Color.GRAY);			
 		g2d.draw(representacion);
 	}
 	
