@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import excepciones.SintaxisException;
+import modelo.Circulo;
 import modelo.Composicion;
 import modelo.Figura;
+import modelo.Ovalo;
 import modelo.Rectangulo;
 
 public class VentanaPrincipal extends JFrame {
@@ -61,7 +63,7 @@ public class VentanaPrincipal extends JFrame {
 		setTitle("Redes de Hendrix - RDH");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		setSize(800, 600);
+		setSize(1024, 768);
 		setLayout(new BorderLayout());
 		
 		composicion = new Composicion();
@@ -97,18 +99,24 @@ public class VentanaPrincipal extends JFrame {
 				composicion.agregarFiguraGeometrica(f);
 			} else if (barraHerramientas.botonNodosSeleccionado()) {
 				
+			}
+				if (barraHerramientas.botonDominiosSeleccionado()) {
+					Figura f = new Ovalo(x, y, "Esto es una prueba", momentoClick);
+					composicion.agregarFiguraGeometrica(f);
 			} else if (barraHerramientas.botonDominiosSeleccionado()) {
-				
+				if (barraHerramientas.botonEspaciosSeleccionado()) {
+					Figura f = new Circulo(x, y, "Esto es una prueba", momentoClick);
+					composicion.agregarFiguraGeometrica(f);
 			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
-				
+
 			} else if (barraHerramientas.botonSeleccionSeleccionado()) {
 				Figura seleccionada = composicion.buscarFigura(x, y);
 				panelCanvas.actualizarFiguraSeleccionada(seleccionada);
 			} else if (barraHerramientas.botonBorrarSeleccionado()){
-				
+
 			}
 			panelCanvas.refrescar();
-		} catch (SintaxisException e) {
+		} }catch (SintaxisException e) {
 			mostrarMensajeError("Dibujar figura", e.getMessage());
 		}
 	}
@@ -142,3 +150,4 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 }
+	
