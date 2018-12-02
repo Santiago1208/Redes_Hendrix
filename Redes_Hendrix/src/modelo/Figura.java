@@ -53,11 +53,6 @@ public abstract class Figura {
 	protected ArrayList<Arco> arcos;
 
 	/**
-	 * Representa un número único que identifica a la figura
-	 */
-	protected int identificador;
-
-	/**
 	 * Es la representación gráfica de la figura
 	 */
 	protected Shape representacion;
@@ -154,7 +149,7 @@ public abstract class Figura {
 	 * @param nuevaPosicionX - Es la nueva posición x que ocupará la figura.
 	 */
 	public void modificarPosicionX(int nuevaPosicionX) {
-		posicionX = nuevaPosicionX;
+		posicionX = nuevaPosicionX - ancho / 2;
 	}
 
 	/**
@@ -163,7 +158,7 @@ public abstract class Figura {
 	 * @param nuevaPosicionY - Es la nueva posición y que ocupará la figura.
 	 */
 	public void modificarPosicionY(int nuevaPosicionY) {
-		posicionY = nuevaPosicionY;
+		posicionY = nuevaPosicionY - alto / 2;
 	}
 
 	/**
@@ -173,24 +168,6 @@ public abstract class Figura {
 	 */
 	public List<Arco> darArcos() {
 		return arcos;
-	}
-
-	/**
-	 * Retorna el identificador de la figura.
-	 * 
-	 * @return el número que identifica a la figura
-	 */
-	public int darIdentificador() {
-		return identificador;
-	}
-
-	/**
-	 * Método que se encarga de asignar un identificador a la figura
-	 * 
-	 * @param identificador - Es el número con el cual se identificará
-	 */
-	public void asignarIdentificador(int identificador) {
-		this.identificador = identificador;
 	}
 
 	/**

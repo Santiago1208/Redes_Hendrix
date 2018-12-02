@@ -1,7 +1,6 @@
 package modelo;
 
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Clase que representan los dominios de la red
@@ -39,12 +38,24 @@ public class Ovalo extends Figura {
 		super(posicionX, posicionY, etiqueta, momentoCreacion);
 		ancho = ANCHO_POR_DEFECTO;
 		alto = ALTO_POR_DEFECTO;
-		
-		representacion = new Ellipse2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
+		this.posicionX -= ancho / 2;
+		this.posicionY -= alto / 2;
+		this.etiqueta = etiqueta;
+		representacion = new Ellipse2D.Double(this.posicionX, this.posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
 	}
 	// ------------------------------------------------------------------------------------------
 	// Servicios
 	// ------------------------------------------------------------------------------------------
 
+	@Override
+	public void modificarPosicionX(int nuevaPosicionX) {
+		super.modificarPosicionX(nuevaPosicionX);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
+	}
 	
+	@Override
+	public void modificarPosicionY(int nuevaPosicionY) {
+		super.modificarPosicionY(nuevaPosicionY);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
+	}
 }

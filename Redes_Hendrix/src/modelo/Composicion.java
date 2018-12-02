@@ -34,19 +34,13 @@ public class Composicion {
 	/**
 	 * Representa la lista de figuras geométricas que han sido dibujadas por el usuario.
 	 */
-	private HashMap<Integer, Figura> figurasGeometricas;
-	
-	/**
-	 * Representa un número que se asigna a cada figura para identificarlas
-	 */
-	private Integer secuencia;
+	private HashMap<Long, Figura> figurasGeometricas;
 	
 	// ------------------------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------------------------
 	
 	public Composicion() {
-		secuencia = 0;
 		figurasGeometricas = new HashMap<>();
 		bloques = new ArrayList<>();
 	}
@@ -67,7 +61,7 @@ public class Composicion {
 	 * Método que se encarga de dar la lista de figuras geométricas dibujadas por el usuario.
 	 * @return la lista de figuras que ha dibujado el usuario.
 	 */
-	public HashMap<Integer, Figura> darFigurasGeometricas() {
+	public HashMap<Long, Figura> darFigurasGeometricas() {
 		return figurasGeometricas;
 	}
 	
@@ -92,9 +86,7 @@ public class Composicion {
 	 * @throws SintaxisException
 	 */
 	public void agregarFiguraGeometrica(Figura f) throws SintaxisException {
-		f.asignarIdentificador(secuencia);
-		figurasGeometricas.put(secuencia, f);
-		secuencia++;
+		figurasGeometricas.put(f.darMomentoCreacion(), f);
 	}
 	
 	/**
@@ -129,6 +121,12 @@ public class Composicion {
 					+ "no están definidas");
 		}
 		origen.agregarArco(destino, etiqueta);
+	}
+	
+	public void borrarFigura(Figura f) {
+		if(f != null) {
+			figurasGeometricas.remove(f.momentoCreacion);
+		}
 	}
 	
 	

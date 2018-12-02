@@ -1,8 +1,6 @@
 package modelo;
 
-import java.util.ArrayList;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Clase que representa las variables y las constantes de la red
@@ -39,13 +37,26 @@ public class Circulo extends Figura {
 		super(posicionX, posicionY, etiqueta, momentoCreacion);
 		ancho = RADIO_POR_DEFECTO;
 		alto = RADIO_POR_DEFECTO;
-		etiqueta="vacío";
-		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
-
+		this.etiqueta = etiqueta;
+		this.posicionX -= ancho / 2;
+		this.posicionY -= alto / 2;
+		representacion = new Ellipse2D.Double(this.posicionX, this.posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
 	}
 	
 	// ------------------------------------------------------------------------------------------
 	// Servicios
 	// ------------------------------------------------------------------------------------------
-
+	
+	
+	@Override
+	public void modificarPosicionX(int nuevaPosicionX) {
+		super.modificarPosicionX(nuevaPosicionX);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+	}
+	
+	@Override
+	public void modificarPosicionY(int nuevaPosicionY) {
+		super.modificarPosicionY(nuevaPosicionY);
+		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+	}
 }

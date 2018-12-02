@@ -128,11 +128,23 @@ public class VentanaPrincipal extends JFrame {
 					panelCanvas.agregarFiguraSeleccionada(seleccionada);					
 				}
 			} else if (barraHerramientas.botonBorrarSeleccionado()){
-
+				Figura f = composicion.buscarFigura(x, y);
+				composicion.borrarFigura(f);
 			}
 			panelCanvas.refrescar();
 		}catch (Exception e) {
 			mostrarMensajeError("Dibujar figura", e.getMessage());
+		}
+	}
+	
+	public void moverFigura(int x, int y) {
+		Figura f = composicion.buscarFigura(x, y);
+		if (barraHerramientas.botonSeleccionSeleccionado()) {
+			if (f != null) {
+				f.modificarPosicionX(x);
+				f.modificarPosicionY(y);
+				panelCanvas.refrescar();
+			}			
 		}
 	}
 	

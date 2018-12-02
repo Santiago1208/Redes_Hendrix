@@ -314,8 +314,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		//principal.prueba();			
-		
+		principal.moverFigura(e.getX(), e.getY());
 	}
 
 	@Override

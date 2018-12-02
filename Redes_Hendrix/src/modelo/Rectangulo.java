@@ -50,8 +50,10 @@ public class Rectangulo extends Figura {
 		super(posicionX, posicionY, etiqueta, creacion);
 		ancho = ANCHO_POR_DEFECTO;
 		alto = ALTO_POR_DEFECTO;
+		this.posicionX -= ancho / 2;
+		this.posicionY -= alto / 2;
 		figurasHijas = new ArrayList<>();
-		representacion = new Rectangle2D.Double(posicionX, posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
+		representacion = new Rectangle2D.Double(this.posicionX, this.posicionY, ANCHO_POR_DEFECTO, ALTO_POR_DEFECTO);
 	}
 	
 	// ------------------------------------------------------------------------------------------
@@ -64,6 +66,18 @@ public class Rectangulo extends Figura {
 	 */
 	public List<Figura> darFigurasHijas() {
 		return figurasHijas;
+	}
+	
+	@Override
+	public void modificarPosicionX(int nuevaPosicionX) {
+		super.modificarPosicionX(nuevaPosicionX);
+		representacion = new Rectangle2D.Double(posicionX, posicionY, ancho, alto);
+	}
+	
+	@Override
+	public void modificarPosicionY(int nuevaPosicionY) {
+		super.modificarPosicionY(nuevaPosicionY);
+		representacion = new Rectangle2D.Double(posicionX, posicionY, ancho, alto);
 	}
 
 }
