@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -133,15 +134,31 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	private void dibujarEspacio(Graphics2D g2d, Figura f, boolean focalizado) {
+        String text = "This is a test xyx";
+
+        FontMetrics fm = g2d.getFontMetrics();
+        int totalWidth = (fm.stringWidth(text) * 2) + 4;
+		
 		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
+		int x = (f.darPosicionX()) ; //Posición X del texto
+		int y = (f.darPosicionY()+ fm.getHeight()*2) ; //Posición Y del texto
+		
+		if (representacion.getWidth()< totalWidth) { //Si el tamaño del rectangulo es menor al del String a escribir
+			representacion.width=fm.stringWidth(text+3); //Set sencillo del width para que se adapte al rectángulo
+			x++; //Dos aumentos de 1 pixel para que el string se vea centrado
+			x++;
+		}
+		
 		if (!focalizado) {
 			g2d.setColor(new Color(200, 108, 55));
 		} else {
 			g2d.setColor(Color.YELLOW);
 		}
+		
 		g2d.fill(representacion);
 		g2d.setColor(Color.BLACK);			
 		g2d.draw(representacion);
+		g2d.drawString(text, x, y); // Escritura del texto
 	}
 	
 	private void dibujarDominio(Graphics2D g2d, Figura f, boolean focalizado) {

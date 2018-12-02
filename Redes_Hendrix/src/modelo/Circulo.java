@@ -39,7 +39,7 @@ public class Circulo extends Figura {
 		super(posicionX, posicionY, etiqueta, momentoCreacion);
 		ancho = RADIO_POR_DEFECTO;
 		alto = RADIO_POR_DEFECTO;
-		
+		etiqueta="vacío";
 		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
 
 	}
