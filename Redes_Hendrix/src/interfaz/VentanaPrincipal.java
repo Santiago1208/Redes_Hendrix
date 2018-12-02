@@ -99,7 +99,7 @@ public class VentanaPrincipal extends JFrame {
 			} else if (barraHerramientas.botonDominiosSeleccionado()) {
 				String msg = JOptionPane.showInputDialog("Ingrese el nombre del elemento:");
 				if (msg!=null) {
-					Figura f = new Ovalo(x, y, JOptionPane.showInputDialog("Ingrese el nombre del elemento:"), momentoClick);
+					Figura f = new Ovalo(x, y, msg, momentoClick);
 					composicion.agregarFiguraGeometrica(f);
 				}
 				
