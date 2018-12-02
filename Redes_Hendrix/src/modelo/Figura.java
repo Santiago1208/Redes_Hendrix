@@ -200,6 +200,8 @@ public abstract class Figura {
         arcos.add(nuevoArco);
 	}
 	
+	
+	
 	/**
 	 * Calcula el centro de la figura geométrica basandose en su contorno.
 	 * @param contorno - Es el contorno de la figura

@@ -244,6 +244,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	    polygon.lineTo(end.getX() + x1, end.getY() + y1);
 	    polygon.lineTo(end.getX() + x2, end.getY() + y2);
 	    polygon.closePath();
+	    g2d.setColor(Color.black);
 	    g2d.fill(polygon);
 
 //	    g2d.setStroke(lineStroke);
