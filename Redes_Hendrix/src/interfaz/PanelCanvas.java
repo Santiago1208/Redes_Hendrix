@@ -12,7 +12,6 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -145,56 +144,70 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 		}
 	}
 	
-	private void dibujarEspacio(Graphics2D g2d, Figura f, boolean focalizado) {
-        String text = "This is a test xyx";
+	private Point escritorEnFiguras(Figura f, Graphics2D g2d) {
 
-        FontMetrics fm = g2d.getFontMetrics();
-        int totalWidth = (fm.stringWidth(text) * 2) + 4;
-		
-		Rectangle2D.Double representacion = (Rectangle2D.Double) f.darRepresentacion();
-		int x = (f.darPosicionX()) ; //Posición X del texto
-		int y = (f.darPosicionY()+ fm.getHeight()*2) ; //Posición Y del texto
-		
-		if (representacion.getWidth()< totalWidth) { //Si el tamaño del rectangulo es menor al del String a escribir
-			representacion.width=fm.stringWidth(text+3); //Set sencillo del width para que se adapte al rectángulo
-			x++; //Dos aumentos de 1 pixel para que el string se vea centrado
+		FontMetrics fm = g2d.getFontMetrics();
+		int totalWidth = (fm.stringWidth(f.darEtiqueta()) * 2) + 4;
+
+		int x = (f.darPosicionX()); // Posición X del texto
+		int y = (f.darPosicionY() + fm.getHeight() * 2); // Posición Y del texto
+
+		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
+
+		if (representacion.getWidth() < totalWidth) { // Si el tamaño del rectangulo es menor al del String a escribir
+			representacion.width = fm.stringWidth(f.darEtiqueta() + 3); // Set sencillo del width para que se adapte al
+																		// rectángulo
+			x++; // Dos aumentos de 1 pixel para que el string se vea centrado
 			x++;
 		}
-		
+
+		return new Point(x, y);
+	}
+	
+	private void dibujarEspacio(Graphics2D g2d, Figura f, boolean focalizado) {
 		if (!focalizado) {
 			g2d.setColor(new Color(200, 108, 55));
 		} else {
 			g2d.setColor(Color.YELLOW);
 		}
-		
-		g2d.fill(representacion);
-		g2d.setColor(Color.BLACK);			
-		g2d.draw(representacion);
-		g2d.drawString(text, x, y); // Escritura del texto
+
+		g2d.fill(f.darRepresentacion());
+		g2d.setColor(Color.BLACK);
+		g2d.draw(f.darRepresentacion());
+
 	}
 	
 	private void dibujarDominio(Graphics2D g2d, Figura f, boolean focalizado) {
-		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
 		if (!focalizado) {
 			g2d.setColor(new Color(100, 64, 32));
 		} else {
 			g2d.setColor(Color.RED);
 		}
-		g2d.fill(representacion);
-		g2d.setColor(Color.DARK_GRAY);			
-		g2d.draw(representacion);
+		Point coordenadasString = escritorEnFiguras(f, g2d);
+
+		g2d.fill(f.darRepresentacion());
+		g2d.setColor(Color.DARK_GRAY);
+		g2d.draw(f.darRepresentacion());
+
+		g2d.setColor(Color.WHITE);
+		g2d.drawString(f.darEtiqueta(), coordenadasString.x, coordenadasString.y); // Escritura del texto
+
 	}
-	
+		//Para mejorar: que las letras queden mas centrales en circulos y ovalos 
 	private void dibujarNodo(Graphics2D g2d, Figura f, boolean focalizado) {
-		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
 		if (!focalizado) {
 			g2d.setColor(new Color(88, 154, 232));
 		} else {
 			g2d.setColor(Color.ORANGE);
 		}
-		g2d.fill(representacion);
-		g2d.setColor(Color.GRAY);			
-		g2d.draw(representacion);
+		Point coordenadasString = escritorEnFiguras(f, g2d);
+		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
+		representacion.height = representacion.width;
+		g2d.fill(f.darRepresentacion());
+		g2d.setColor(Color.GRAY);
+		g2d.draw(f.darRepresentacion());
+		g2d.setColor(Color.WHITE);
+		g2d.drawString(f.darEtiqueta(), coordenadasString.x, coordenadasString.y); // Escritura del texto
 	}
 	
 	private void dibujarArco(Graphics2D g2d, Arco arco, boolean focalizado) {

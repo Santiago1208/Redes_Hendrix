@@ -97,12 +97,18 @@ public class VentanaPrincipal extends JFrame {
 				Figura f = new Rectangulo(x, y, "Esto es una prueba", momentoClick);
 				composicion.agregarFiguraGeometrica(f);
 			} else if (barraHerramientas.botonDominiosSeleccionado()) {
-				Figura f = new Ovalo(x, y, "Esto es una prueba", momentoClick);
-				composicion.agregarFiguraGeometrica(f);
+				String msg = JOptionPane.showInputDialog("Ingrese el nombre del elemento:");
+				if (msg!=null) {
+					Figura f = new Ovalo(x, y, JOptionPane.showInputDialog("Ingrese el nombre del elemento:"), momentoClick);
+					composicion.agregarFiguraGeometrica(f);
+				}
 				
 			} else if (barraHerramientas.botonNodosSeleccionado()) {
-				Figura f = new Circulo(x, y, "Esto es una prueba", momentoClick);
+				String msg = JOptionPane.showInputDialog("Ingrese el nombre del elemento:");
+				if (msg!=null) {
+				Figura f = new Circulo(x, y, msg, momentoClick);
 				composicion.agregarFiguraGeometrica(f);
+				}
 			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
 				Figura f = composicion.buscarFigura(x, y);
 				if (f != null) {
