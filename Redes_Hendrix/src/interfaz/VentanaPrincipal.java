@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
-import excepciones.SintaxisException;
 import modelo.Circulo;
 import modelo.Composicion;
 import modelo.Figura;
@@ -104,16 +103,35 @@ public class VentanaPrincipal extends JFrame {
 			} else if (barraHerramientas.botonNodosSeleccionado()) {
 				Figura f = new Circulo(x, y, "Esto es una prueba", momentoClick);
 				composicion.agregarFiguraGeometrica(f);
+			} else if (barraHerramientas.botonRelacionesSeleccionado()) {
+				Figura f = composicion.buscarFigura(x, y);
+				if (f != null) {
+					panelCanvas.agregarFiguraSeleccionada(f);
+				} else {
+					panelCanvas.quitarFocoFiguras();
+				}
+				if (panelCanvas.hayDosFigurasSeleccionadas()) {
+					String etiqueta = JOptionPane.showInputDialog(this, "Nombre de relación:", "Crear arco", 
+							JOptionPane.INFORMATION_MESSAGE);
+					if (etiqueta != null) {
+						composicion.crearArco(panelCanvas.darFiguraOrigen(), 
+								panelCanvas.darFiguraDestino(), etiqueta);						
+					}
+					panelCanvas.quitarFocoFiguras();
+				}
 				
-			}	
-	        else if (barraHerramientas.botonSeleccionSeleccionado()) {
+			} else if (barraHerramientas.botonSeleccionSeleccionado()) {
 				Figura seleccionada = composicion.buscarFigura(x, y);
-				panelCanvas.actualizarFiguraSeleccionada(seleccionada);
+				if (seleccionada == null) {
+					panelCanvas.quitarFocoFiguras();
+				} else {
+					panelCanvas.agregarFiguraSeleccionada(seleccionada);					
+				}
 			} else if (barraHerramientas.botonBorrarSeleccionado()){
 
 			}
 			panelCanvas.refrescar();
-		}catch (SintaxisException e) {
+		}catch (Exception e) {
 			mostrarMensajeError("Dibujar figura", e.getMessage());
 		}
 	}
