@@ -1,5 +1,7 @@
 package modelo;
 
+import java.awt.geom.Point2D;
+
 /**
  * Clase que representa la relación entre dos figuras geométricas.
  * @author Santiago
@@ -25,22 +27,22 @@ public class Arco {
 	/**
 	 * Representa la coordenda x del primer punto por el cual pasa el arco.
 	 */
-	private Double posicionX1;
+	private double posicionX1;
 	
 	/**
 	 * Repremodificarna la coordenada y del primer punto por el cual pasa el arco.
 	 */
-	private Double posicionY1;
+	private double posicionY1;
 	
 	/**
 	 * Representa la coordenada x del segundo punto por el cual pasa el arco.
 	 */
-	private Double posicionX2;
+	private double posicionX2;
 	
 	/**
 	 * Representa la coordenada y del segundo punto por el cual pasa el arco.
 	 */
-	private Double posicionY2;
+	private double posicionY2;
 	
 	/**
 	 * Representa la figura a la cual llega el arco.
@@ -60,15 +62,15 @@ public class Arco {
 	 * @param y1 - Es la coordenada y de P1.
 	 * @param x2 - Es la coordenada x de P2.
 	 * @param y2 - Es la coordenada y de P2.
-	 * @param destino - Es la figura a la cual apunta el arco
+	 * @param relacionada - Es la figura a la cual apunta el arco
 	 */
-	public Arco(String etiqueta, Double x1, Double y1, Double x2, Double y2, Figura destino) {
+	public Arco(String etiqueta, Point2D inicio, Point2D fin, Figura relacionada) {
 		this.etiqueta = etiqueta;
-		posicionX1 = x1;
-		posicionY1 = y1;
-		posicionX2 = x2;
-		posicionY2 = y2;
-		figuraDestino = destino;
+		posicionX1 = inicio.getX();
+		posicionY1 = inicio.getY();
+		posicionX2 = fin.getX();
+		posicionY2 = fin.getY();
+		figuraDestino = relacionada;
 	}
 	
 	// ------------------------------------------------------------------------------------------
@@ -83,35 +85,35 @@ public class Arco {
 		this.etiqueta = etiqueta;
 	}
 	
-	public Double darPosicionX1() {
+	public double darPosicionX1() {
 		return posicionX1;
 	}
 	
-	public void modificarPosicionX1(Double posicionX1) {
+	public void modificarPosicionX1(double posicionX1) {
 		this.posicionX1 = posicionX1;
 	}
 	
-	public Double darPosicionX2() {
+	public double darPosicionX2() {
 		return posicionX2;
 	}
 	
-	public void modificarPosicionX2(Double posicionX2) {
+	public void modificarPosicionX2(double posicionX2) {
 		this.posicionX2 = posicionX2;
 	}
 	
-	public Double darPosicionY1() {
+	public double darPosicionY1() {
 		return posicionY1;
 	}
 	
-	public void modificarPosicionY1(Double posicionY1) {
+	public void modificarPosicionY1(double posicionY1) {
 		this.posicionY1 = posicionY1;
 	}
 	
-	public Double darPosicionY2() {
+	public double darPosicionY2() {
 		return posicionY2;
 	}
 	
-	public void modificarPosicionY2(Double posicionY2) {
+	public void modificarPosicionY2(double posicionY2) {
 		this.posicionY2 = posicionY2;
 	}
 

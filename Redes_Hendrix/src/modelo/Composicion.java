@@ -123,5 +123,13 @@ public class Composicion {
 		return buscada;
 	}
 	
+	public void crearArco(Figura origen, Figura destino, String etiqueta) throws Exception {
+		if (origen == null || destino == null) {
+			throw new Exception("No se puede crear el arco. La figura origen o la de destino "
+					+ "no están definidas");
+		}
+		origen.agregarArco(destino, etiqueta);
+	}
+	
 	
 }
