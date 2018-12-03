@@ -1,6 +1,5 @@
 package modelo;
 
-import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 /**
@@ -59,20 +58,14 @@ public class Circulo extends Figura {
 	
 	@Override
 	public void modificarPosicionX(int nuevaPosicionX) {
-		Rectangle tmp = new Rectangle(nuevaPosicionX, posicionY, ancho, alto);
-		if (padre.representacion.contains(tmp)) {
-			super.modificarPosicionX(nuevaPosicionX);
-			actualizarRepresentacion();			
-		}
+		super.modificarPosicionX(nuevaPosicionX);
+		actualizarRepresentacion();
 	}
 	
 	@Override
 	public void modificarPosicionY(int nuevaPosicionY) {
-		Rectangle tmp = new Rectangle(posicionX, nuevaPosicionY, ancho, alto);
-		if (padre.representacion.contains(tmp)) {
-			super.modificarPosicionY(nuevaPosicionY);
-			actualizarRepresentacion();			
-		}
+		super.modificarPosicionY(nuevaPosicionY);
+		actualizarRepresentacion();
 	}
 	
 	public Rectangulo darPadre() {

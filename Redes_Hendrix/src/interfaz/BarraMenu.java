@@ -94,10 +94,10 @@ public class BarraMenu extends JMenuBar implements ActionListener {
 		itemGuardar.addActionListener(this);
 		menuArchivo.add(itemGuardar);
 		
-		itemExportar = new JMenuItem(EXPORTAR);
-		itemExportar.setActionCommand(EXPORTAR);
-		itemExportar.addActionListener(this);
-		menuArchivo.add(itemExportar);
+//		itemExportar = new JMenuItem(EXPORTAR);
+//		itemExportar.setActionCommand(EXPORTAR);
+//		itemExportar.addActionListener(this);
+//		menuArchivo.add(itemExportar);
 		
 		menuArchivo.addSeparator();
 		
@@ -123,6 +123,8 @@ public class BarraMenu extends JMenuBar implements ActionListener {
 			principal.guardarComposicion();
 		} else if (comando.equals(ABRIR)) {
 			principal.abrirComposicion();
+		} else if (comando.equals(CERRAR)) {
+			principal.dispose();
 		}
 	}
 
