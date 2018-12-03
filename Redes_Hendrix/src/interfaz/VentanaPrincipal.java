@@ -213,32 +213,40 @@ public class VentanaPrincipal extends JFrame {
 	public void aumentarAnchoFigura(Point coordenada) {
 		Figura f = composicion.buscarFigura(coordenada.x, coordenada.y);
 		if (f != null) {
-			f.aumentarAncho();
-			panelCanvas.refrescar();
+			if (barraHerramientas.botonSeleccionSeleccionado()) {
+				f.aumentarAncho();
+				panelCanvas.refrescar();				
+			}
 		}
 	}
 	
 	public void disminuirAnchoFigura(Point coordenada) {
 		Figura f = composicion.buscarFigura(coordenada.x, coordenada.y);
 		if (f != null) {
-			f.disminuirAncho();
-			panelCanvas.refrescar();
+			if (barraHerramientas.botonSeleccionSeleccionado()) {
+				f.disminuirAncho();
+				panelCanvas.refrescar();				
+			}
 		}
 	}
 	
 	public void aumentarAltoFigura(Point coordenada) {
 		Figura f = composicion.buscarFigura(coordenada.x, coordenada.y);
 		if (f != null) {
-			f.aumentarAlto();
-			panelCanvas.refrescar();
+			if (barraHerramientas.botonSeleccionSeleccionado()) {
+				f.aumentarAlto();
+				panelCanvas.refrescar();				
+			}
 		}
 	}
 	
 	public void disminuirAltoFigura(Point coordenada) {
 		Figura f = composicion.buscarFigura(coordenada.x, coordenada.y);
 		if (f != null) {
-			f.disminuirAlto();
-			panelCanvas.refrescar();
+			if (barraHerramientas.botonSeleccionSeleccionado()) {
+				f.disminuirAlto();
+				panelCanvas.refrescar();				
+			}
 		}
 	}
 	

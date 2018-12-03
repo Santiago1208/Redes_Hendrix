@@ -99,4 +99,15 @@ public class Ovalo extends Figura {
 	private void actualizarRepresentacion() {
 		representacion = new Ellipse2D.Double(posicionX, posicionY, ancho, alto);
 	}
+
+	@Override
+	public int compareTo(Figura o) {
+		if (momentoCreacion < o.momentoCreacion) {
+			return -1;
+		} else if (momentoCreacion > o.momentoCreacion) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
 }

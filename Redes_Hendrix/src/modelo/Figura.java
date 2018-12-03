@@ -13,7 +13,7 @@ import java.util.List;
  * @author Santiago
  *
  */
-public abstract class Figura implements Serializable {
+public abstract class Figura implements Serializable, Comparable<Figura> {
 
 	// ------------------------------------------------------------------------------------------
 	// Constantes

@@ -16,7 +16,8 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -109,8 +110,10 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		Collection<Figura> listaFiguras = composicion.darFigurasGeometricas().values();
-		for(Figura f: listaFiguras) {
+		Vector<Figura> listaFiguras = new Vector<>(composicion.darFigurasGeometricas().values()); 
+		Collections.sort(listaFiguras);
+		for (int i = 0; i < listaFiguras.size(); i++) {
+			Figura f = listaFiguras.get(i);
 			if (f instanceof Rectangulo) {
 				if (figurasSeleccionadas.isEmpty()) 
 					dibujarEspacio(g2d, f, false); 
@@ -140,6 +143,8 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 					 else 	dibujarNodo(g2d, f, false);
 				}
 			}
+		}
+		for(Figura f: listaFiguras) {
 			ArrayList<Arco> arcos = (ArrayList<Arco>) f.darArcos();
 			if (!arcos.isEmpty()) {
 				for(Arco a : arcos) {
@@ -356,9 +361,9 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 			}		
 		} else if (e.isAltDown()) {
 			if (e.getWheelRotation() < 0) {
-				principal.aumentarAltoFigura(coordenada);
-			} else {
 				principal.disminuirAltoFigura(coordenada);
+			} else {
+				principal.aumentarAltoFigura(coordenada);
 			}
 		}else {
 			principal.scroll(this, e);

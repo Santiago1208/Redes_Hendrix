@@ -24,12 +24,12 @@ public class Rectangulo extends Figura {
 	/**
 	 * Representa la anchura por defecto del rectángulo
 	 */
-	public final static int ANCHO_POR_DEFECTO = 150;
+	public final static int ANCHO_POR_DEFECTO = 130;
 	
 	/**
 	 * Representa la altura por defecto del rectángulo
 	 */
-	public final static int ALTO_POR_DEFECTO = 60;
+	public final static int ALTO_POR_DEFECTO = 130;
 	
 	// ------------------------------------------------------------------------------------------
 	// Atributos
@@ -126,6 +126,17 @@ public class Rectangulo extends Figura {
 	public void agregarHija(Figura f) {
 		if (!figurasHijas.contains(f)) {
 			figurasHijas.add(f);
+		}
+	}
+
+	@Override
+	public int compareTo(Figura o) {
+		if (momentoCreacion < o.momentoCreacion) {
+			return -1;
+		} else if (momentoCreacion > o.momentoCreacion) {
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 
