@@ -119,6 +119,10 @@ public class BarraMenu extends JMenuBar implements ActionListener {
 		String comando = e.getActionCommand();
 		if (comando.equals(NUEVO)) {
 			principal.nuevoDiagrama();
+		} else if (comando.equals(GUARDAR)) {
+			principal.guardarComposicion();
+		} else if (comando.equals(ABRIR)) {
+			principal.abrirComposicion();
 		}
 	}
 

@@ -1,5 +1,6 @@
 package modelo;
 
+import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 /**
@@ -14,6 +15,11 @@ public class Circulo extends Figura {
 	// ------------------------------------------------------------------------------------------
 	
 	/**
+	 * Versión de serialización
+	 */
+	private static final long serialVersionUID = -2188907686501112302L;
+	
+	/**
 	 * Representa el radio por defecto del círculo
 	 */
 	public final static int RADIO_POR_DEFECTO = 60;
@@ -21,6 +27,8 @@ public class Circulo extends Figura {
 	// ------------------------------------------------------------------------------------------
 	// Atributos
 	// ------------------------------------------------------------------------------------------
+	
+	private Rectangulo padre;
 	
 	// ------------------------------------------------------------------------------------------
 	// Constructor
@@ -33,14 +41,15 @@ public class Circulo extends Figura {
 	 * @param posicionY - Es la coordenada y del punto donde se ubicará el círculo.
 	 * @param etiqueta  - Es el contenido semántico que estará dentro del círculo.
 	 */
-	public Circulo(int posicionX, int posicionY, String etiqueta, Long momentoCreacion) {
+	public Circulo(int posicionX, int posicionY, String etiqueta, Long momentoCreacion, Rectangulo padre) {
 		super(posicionX, posicionY, etiqueta, momentoCreacion);
 		ancho = RADIO_POR_DEFECTO;
 		alto = RADIO_POR_DEFECTO;
 		this.etiqueta = etiqueta;
-		this.posicionX -= ancho / 2;
-		this.posicionY -= alto / 2;
+		this.posicionX += ancho / 2;
+		this.posicionY += alto / 2;
 		representacion = new Ellipse2D.Double(this.posicionX, this.posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+		this.modificarPadre(padre);
 	}
 	
 	// ------------------------------------------------------------------------------------------
@@ -50,13 +59,70 @@ public class Circulo extends Figura {
 	
 	@Override
 	public void modificarPosicionX(int nuevaPosicionX) {
-		super.modificarPosicionX(nuevaPosicionX);
-		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+		Rectangle tmp = new Rectangle(nuevaPosicionX, posicionY, ancho, alto);
+		if (padre.representacion.contains(tmp)) {
+			super.modificarPosicionX(nuevaPosicionX);
+			actualizarRepresentacion();			
+		}
 	}
 	
 	@Override
 	public void modificarPosicionY(int nuevaPosicionY) {
-		super.modificarPosicionY(nuevaPosicionY);
-		representacion = new Ellipse2D.Double(posicionX, posicionY, RADIO_POR_DEFECTO, RADIO_POR_DEFECTO);
+		Rectangle tmp = new Rectangle(posicionX, nuevaPosicionY, ancho, alto);
+		if (padre.representacion.contains(tmp)) {
+			super.modificarPosicionY(nuevaPosicionY);
+			actualizarRepresentacion();			
+		}
+	}
+	
+	public Rectangulo darPadre() {
+		return padre;
+	}
+
+	public void modificarPadre(Rectangulo padre) {
+		this.padre = padre;
+	}
+	
+	@Override
+	public void aumentarAncho() {
+		super.aumentarAncho();
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void disminuirAncho() {
+		super.disminuirAncho();
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void modificarAncho(int nuevoAncho) {
+		super.modificarAncho(nuevoAncho);
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void modificarAlto(int nuevoAlto) {
+		super.modificarAlto(nuevoAlto);
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void aumentarAlto() {
+		super.aumentarAlto();
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void disminuirAlto() {
+		if ((alto - RAZON_CAMBIO_TAMAÑO) > RADIO_POR_DEFECTO) {
+			super.disminuirAlto();
+			actualizarRepresentacion();			
+		}
+	}
+	
+	
+	private void actualizarRepresentacion() {
+		representacion = new Ellipse2D.Double(posicionX, posicionY, ancho, alto);
 	}
 }

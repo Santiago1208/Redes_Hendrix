@@ -2,6 +2,11 @@ package modelo;
 
 import java.awt.Shape;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,13 +41,31 @@ public class Composicion {
 	 */
 	private HashMap<Long, Figura> figurasGeometricas;
 	
+	/**
+	 * Representa el archivo en el cual se persiste el programa.
+	 */
+	private File archivoComposicion;
+	
 	// ------------------------------------------------------------------------------------------
 	// Constructor
 	// ------------------------------------------------------------------------------------------
 	
-	public Composicion() {
-		figurasGeometricas = new HashMap<>();
-		bloques = new ArrayList<>();
+	@SuppressWarnings("unchecked")
+	public Composicion() throws Exception {
+		try {
+			archivoComposicion =  new File("./persistencia/composicion.hdr");
+			if (archivoComposicion.exists()) {
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivoComposicion));
+				bloques = (ArrayList<Bloque>) ois.readObject();
+				figurasGeometricas = (HashMap<Long, Figura>) ois.readObject();
+				ois.close();
+			} else {
+				figurasGeometricas = new HashMap<>();
+				bloques = new ArrayList<>();				
+			}
+		} catch (Exception e) {
+			throw new Exception("Imposible restaurar el estado del programa (" + e.getMessage() + ")");
+		}
 	}
 	
 	// ------------------------------------------------------------------------------------------
@@ -127,6 +150,45 @@ public class Composicion {
 		if(f != null) {
 			figurasGeometricas.remove(f.momentoCreacion);
 		}
+	}
+	
+	public void salvarComposicion() throws Exception {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoComposicion));
+			oos.writeObject(bloques);
+			oos.writeObject(figurasGeometricas);
+			oos.close();
+		} catch (Exception e) {
+			throw new Exception ("Error al salvar: " + e.getMessage());
+		}
+	}
+	
+	public void salvarComposicion(File archivoPersonalizado) throws Exception {
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoPersonalizado));
+			oos.writeObject(bloques);
+			oos.writeObject(figurasGeometricas);
+			oos.close();
+		} catch (Exception e) {
+			throw new Exception ("Error al salvar: " + e.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void abrirComposicion(File archivo) throws Exception {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo));
+			bloques = (ArrayList<Bloque>) ois.readObject();
+			figurasGeometricas = (HashMap<Long, Figura>) ois.readObject();
+			ois.close();
+		} catch (Exception e) {
+			throw new Exception("Imposible restaurar el estado del programa (" + e.getMessage() + ")");
+		}
+	}
+	
+	public void crearNuevoDiagrama() {
+		bloques = new ArrayList<>();
+		figurasGeometricas = new HashMap<>();
 	}
 	
 	

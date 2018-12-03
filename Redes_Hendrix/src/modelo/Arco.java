@@ -1,18 +1,24 @@
 package modelo;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 /**
  * Clase que representa la relación entre dos figuras geométricas.
  * @author Santiago
  *
  */
-public class Arco {
+public class Arco implements Serializable {
 	
+
 	// ------------------------------------------------------------------------------------------
 	// Constantes
 	// ------------------------------------------------------------------------------------------
 	
+	/**
+	 * Versión de serialización
+	 */
+	private static final long serialVersionUID = 5321107919462437653L;
 	
 	
 	// ------------------------------------------------------------------------------------------

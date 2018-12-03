@@ -1,5 +1,6 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,18 +9,23 @@ import java.util.List;
  * @author Santiago
  *
  */
-public class Bloque {
+public class Bloque implements Serializable {
 	
 	// ------------------------------------------------------------------------------------------
 	// Constantes
 	// ------------------------------------------------------------------------------------------
 	
+	/**
+	 * Versión de serialización
+	 */
+	private static final long serialVersionUID = -7066661952090117912L;
 	
 	
 	// ------------------------------------------------------------------------------------------
 	// Atributos
 	// ------------------------------------------------------------------------------------------
 	
+
 	/**
 	 * Representa el nombre con el cual se identificará el bloque.
 	 */

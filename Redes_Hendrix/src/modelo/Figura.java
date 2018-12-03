@@ -3,6 +3,7 @@ package modelo;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +13,23 @@ import java.util.List;
  * @author Santiago
  *
  */
-public abstract class Figura {
+public abstract class Figura implements Serializable {
 
 	// ------------------------------------------------------------------------------------------
 	// Constantes
 	// ------------------------------------------------------------------------------------------
 
+	/**
+	 * Versión de serialización.
+	 */
+	private static final long serialVersionUID = -1421635409742995582L;
+	
+	public final static int RAZON_CAMBIO_TAMAÑO = 10;
+	
 	// ------------------------------------------------------------------------------------------
 	// Atributos
 	// ------------------------------------------------------------------------------------------
+
 
 	/**
 	 * Representa la coordenada en el eje x donde está posicionada la figura.
@@ -114,6 +123,18 @@ public abstract class Figura {
 	public int darAncho() {
 		return ancho;
 	}
+	
+	public void modificarAncho(int nuevoAncho) {
+		ancho = nuevoAncho;
+	}
+	
+	public void aumentarAncho() {
+		ancho += RAZON_CAMBIO_TAMAÑO;
+	}
+	
+	public void disminuirAncho() {
+		ancho -= RAZON_CAMBIO_TAMAÑO;
+	}
 
 	/**
 	 * Método que se encarga de dar el alto de la figura
@@ -122,6 +143,18 @@ public abstract class Figura {
 	 */
 	public int darAlto() {
 		return alto;
+	}
+	
+	public void modificarAlto(int nuevoAlto) {
+		alto = nuevoAlto;
+	}
+	
+	public void aumentarAlto() {
+		alto += RAZON_CAMBIO_TAMAÑO;
+	}
+	
+	public void disminuirAlto() {
+		alto -= RAZON_CAMBIO_TAMAÑO;
 	}
 
 	/**

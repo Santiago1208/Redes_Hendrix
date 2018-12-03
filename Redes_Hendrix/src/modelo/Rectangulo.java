@@ -17,9 +17,14 @@ public class Rectangulo extends Figura {
 	// ------------------------------------------------------------------------------------------
 	
 	/**
+	 * Versión de serialización
+	 */
+	private static final long serialVersionUID = 6097697081296558258L;
+
+	/**
 	 * Representa la anchura por defecto del rectángulo
 	 */
-	public final static int ANCHO_POR_DEFECTO = 80;
+	public final static int ANCHO_POR_DEFECTO = 150;
 	
 	/**
 	 * Representa la altura por defecto del rectángulo
@@ -71,13 +76,57 @@ public class Rectangulo extends Figura {
 	@Override
 	public void modificarPosicionX(int nuevaPosicionX) {
 		super.modificarPosicionX(nuevaPosicionX);
-		representacion = new Rectangle2D.Double(posicionX, posicionY, ancho, alto);
+		actualizarRepresentacion();
 	}
 	
 	@Override
 	public void modificarPosicionY(int nuevaPosicionY) {
 		super.modificarPosicionY(nuevaPosicionY);
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void aumentarAncho() {
+		super.aumentarAncho();
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void disminuirAncho() {
+		if ((ancho - RAZON_CAMBIO_TAMAÑO) > ANCHO_POR_DEFECTO) {
+			super.disminuirAncho();
+			actualizarRepresentacion();
+		}
+	}
+	
+	@Override
+	public void modificarAncho(int nuevoAncho) {
+		super.modificarAncho(nuevoAncho);
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void aumentarAlto() {
+		super.aumentarAlto();
+		actualizarRepresentacion();
+	}
+	
+	@Override
+	public void disminuirAlto() {
+		if ((alto - RAZON_CAMBIO_TAMAÑO) > ALTO_POR_DEFECTO) {
+			super.disminuirAlto();
+			actualizarRepresentacion();			
+		}
+	}
+	
+	private void actualizarRepresentacion() {
 		representacion = new Rectangle2D.Double(posicionX, posicionY, ancho, alto);
+	}
+	
+	public void agregarHija(Figura f) {
+		if (!figurasHijas.contains(f)) {
+			figurasHijas.add(f);
+		}
 	}
 
 }

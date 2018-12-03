@@ -2,14 +2,17 @@ package interfaz;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Ellipse2D;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import modelo.Figura;
 import modelo.Ovalo;
 import modelo.Rectangulo;
 
-public class PanelCanvas extends JPanel implements MouseListener, MouseMotionListener {
+public class PanelCanvas extends JPanel implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 	/**
 	 * Versión de serialización
@@ -40,6 +43,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	 */
 	private final static Color COLOR_FONDO = new Color(255, 255, 255);
 	
+	private final static Font FUENTE_FIGURAS = new Font("Calibri", Font.BOLD, 18);
 	
 	// ------------------------------------------------------------------------------------------
 	// Atributos
@@ -94,6 +98,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 		setPreferredSize(new Dimension(this.ancho, this.alto));
 		addMouseMotionListener(this);
 		addMouseListener(this);
+		addMouseWheelListener(this);
 	}
 	
 	// ------------------------------------------------------------------------------------------
@@ -145,22 +150,24 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	}
 	
 	private Point escritorEnFiguras(Figura f, Graphics2D g2d) {
-
-		FontMetrics fm = g2d.getFontMetrics();
-		int totalWidth = (fm.stringWidth(f.darEtiqueta()) * 2) + 4;
-
-		int x = (f.darPosicionX()); // Posición X del texto
-		int y = (f.darPosicionY() + fm.getHeight() * 2); // Posición Y del texto
-
-		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
-
-		if (representacion.getWidth() < totalWidth) { // Si el tamaño del rectangulo es menor al del String a escribir
-			representacion.width = fm.stringWidth(f.darEtiqueta() + 3); // Set sencillo del width para que se adapte al
-																		// rectángulo
-			x++; // Dos aumentos de 1 pixel para que el string se vea centrado
-			x++;
-		}
-
+		// Get the FontMetrics
+	    FontMetrics metrics = g2d.getFontMetrics(FUENTE_FIGURAS);
+	    String etiquetaFigura = f.darEtiqueta();
+	    int anchoEtiqueta = metrics.stringWidth(etiquetaFigura);
+	    Rectangle limitesFigura = f.darRepresentacion().getBounds();
+	    if (limitesFigura.width < anchoEtiqueta) {
+	    	f.modificarAncho(anchoEtiqueta + 10);
+	    	if (f instanceof Circulo) {
+	    		// El ancho y el alto del círculo serán iguales
+	    		f.modificarAlto(f.darAncho());
+	    	}
+	    	// Actualiza los límites de la figura
+	    	limitesFigura = f.darRepresentacion().getBounds();
+	    }
+	    // Determine the X coordinate for the text
+	    int x = limitesFigura.x + (limitesFigura.width - metrics.stringWidth(etiquetaFigura)) / 2;
+	    // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+	    int y = limitesFigura.y + ((limitesFigura.height - metrics.getHeight()) / 2) + metrics.getAscent();
 		return new Point(x, y);
 	}
 	
@@ -190,6 +197,7 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 		g2d.draw(f.darRepresentacion());
 
 		g2d.setColor(Color.WHITE);
+		g2d.setFont(FUENTE_FIGURAS);
 		g2d.drawString(f.darEtiqueta(), coordenadasString.x, coordenadasString.y); // Escritura del texto
 
 	}
@@ -201,12 +209,11 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 			g2d.setColor(Color.ORANGE);
 		}
 		Point coordenadasString = escritorEnFiguras(f, g2d);
-		Ellipse2D.Double representacion = (Ellipse2D.Double) f.darRepresentacion();
-		representacion.height = representacion.width;
 		g2d.fill(f.darRepresentacion());
 		g2d.setColor(Color.GRAY);
 		g2d.draw(f.darRepresentacion());
 		g2d.setColor(Color.WHITE);
+		g2d.setFont(FUENTE_FIGURAS);
 		g2d.drawString(f.darEtiqueta(), coordenadasString.x, coordenadasString.y); // Escritura del texto
 	}
 	
@@ -246,10 +253,11 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	    polygon.closePath();
 	    g2d.setColor(Color.black);
 	    g2d.fill(polygon);
-
+	    System.out.println(arco.darFiguraDestino().darRepresentacion().getBounds());
+	    System.out.println(end.getY() + cy);
 //	    g2d.setStroke(lineStroke);
 	    g2d.drawLine((int) startx, (int) starty, (int) (end.getX() + cx), (int) (end.getY() + cy));
-	    g2d.drawString(arco.darEtiqueta(), (int) (startx * 1.50), (int) (starty / 1.50));
+	    g2d.drawString(arco.darEtiqueta(), (int) (startx + end.getX()) / 2, (int) (starty + end.getY()) / 2);
 	}
 	
 	public boolean hayDosFigurasSeleccionadas() {
@@ -335,6 +343,26 @@ public class PanelCanvas extends JPanel implements MouseListener, MouseMotionLis
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		Point coordenada = e.getPoint();
+		if (e.isControlDown()) {
+			if (e.getWheelRotation() < 0) {
+				principal.aumentarAnchoFigura(coordenada);
+			} else {
+				principal.disminuirAnchoFigura(coordenada);
+			}		
+		} else if (e.isAltDown()) {
+			if (e.getWheelRotation() < 0) {
+				principal.aumentarAltoFigura(coordenada);
+			} else {
+				principal.disminuirAltoFigura(coordenada);
+			}
+		}else {
+			principal.scroll(this, e);
+		}
 	}
 	
 }
